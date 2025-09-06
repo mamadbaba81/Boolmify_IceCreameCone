@@ -1,0 +1,6 @@
+@Boolmify_HostAddress = http://localhost:5034
+
+GET {{Boolmify_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
