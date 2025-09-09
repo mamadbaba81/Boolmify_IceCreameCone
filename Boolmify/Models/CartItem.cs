@@ -17,5 +17,7 @@
         public decimal UnitPrice { get; set; }
         
         public decimal TotalPrice => Quantity * UnitPrice;
-        
+
+        public List<CartItemAddOn> CartItemAddOns { get; set; } = new();
+
     }

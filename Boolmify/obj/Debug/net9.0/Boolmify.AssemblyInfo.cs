@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Boolmify")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+169c190657fdc6426e35dcdd636696a731287ac1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0e09b26d1cfbf9be11438ed20d05aface09e61ca")]
 [assembly: System.Reflection.AssemblyProductAttribute("Boolmify")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Boolmify")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -4,6 +4,10 @@
     {
         public int OrderItemId { get; set;}
 
-        public int  AddOnId { get; set; }
+        public OrderItem OrderItem { get; set; } = default!;
+
+        public int  ProductAddOnId { get; set; }
+        
+        public ProductAddOn ProductAddOn { get; set; } =  default!;
         
     }

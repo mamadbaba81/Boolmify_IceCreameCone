@@ -2,9 +2,13 @@
 
     public class CartItemAddOn
     {
-        public int  OrderItemId { get; set; }
+        public int  CartItemId { get; set; }
 
-        public int  AddOnId { get; set; }
+        public CartItem   CartItem { get; set; } =  default!;
+
+        public int  ProductAddonId { get; set; }
+
+        public ProductAddOn  ProductAddOn { get; set; } = default!;
         
         
     }
