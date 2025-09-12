@@ -10,9 +10,9 @@
         
         public string Content { get; set; } = default!;
         
-        public DateTime CreatedAt { get; set; } =   DateTime.Now;
+        public DateTime CreatedAt { get; set; } 
 
-        public int  ParentCommentId { get; set; } 
+        public int?  ParentCommentId { get; set; } 
 
         public List<CommentDto> Replies { get; set; } = new();
         
