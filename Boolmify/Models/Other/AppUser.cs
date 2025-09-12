@@ -8,18 +8,13 @@
         Admin = 1
     }
 
-    public class AppUser:IdentityUser
+    public class AppUser:IdentityUser<int>
     {
-        public int UserId { get; set; }
-
-        public string UserName { get; set; } = default!;
-        public string Email { get; set; } = default!;
+        public string Identifier { get; set; } = default!;
         
-        public string PasswordHash { get; set; } = default!;
-
         public UserRole Role { get; set; } = UserRole.Customer;
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         // ارتباطات
         public virtual List<Order> Orders { get; set; } = new();

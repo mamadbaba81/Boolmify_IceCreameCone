@@ -2,10 +2,9 @@
 
     public class NewUserDto
     {
-        public string UserName { get; set; }
-    
-        public string Email { get; set; }
-    
-        public String Token { get; set; }
+        public string Identifier { get; set; } = default!;
+
+        public string  Role { get; set; } = "User";
+        public string Token { get; set; }  = default!;
 
     }

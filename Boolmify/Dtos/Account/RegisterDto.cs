@@ -5,14 +5,12 @@
     public class RegisterDto
     {
         [Required]
-        public String? UserName { get; set; }
+        public string Identifier { get; set; } = default!;
+
         [Required]
-        [EmailAddress]
-        public String? Email{ get; set; }
-        [Required]
-        public String? Password { get; set; }
+        public string? Password { get; set; } = default!;
         [Required]
         [Compare("Password",ErrorMessage = "Passwords do not match.")]
-        public string? ConfirmPssword { get; set; }
+        public string ConfirmPssword { get; set; } = default!;
 
     }

@@ -11,7 +11,7 @@
         
         public int  CategoryId { get; set; }
 
-        public string ProductName { get; set; } = default;
+        public string ProductName { get; set; } = default!;
         
         public string? Slug { get; set; }
         
@@ -29,11 +29,11 @@
         
         public bool IsActive { get; set; }
         
-        public virtual List<CommentDto> Comments { get; set; } = new ();
+        public List<CommentDto> Comments { get; set; } = new ();
         
-        public virtual List<ReviewDto> Reviews { get; set; } = new();
+        public List<ReviewDto> Reviews { get; set; } = new();
         
-        public virtual List<ProductOccasionDto> ProductOccasions { get; set; } = new(); 
+        public  List<ProductOccasionDto> ProductOccasions { get; set; } = new(); 
         
-        public virtual List<ProductAddonDto> AddOns { get; set; } = new(); 
+        public List<ProductAddonDto> AddOns { get; set; } = new(); 
     }

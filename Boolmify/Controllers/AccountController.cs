@@ -22,11 +22,13 @@
             
         }
            [HttpPost("Login")]
-        public async Task<IActionResult> Login( LoginDto loginDto)
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
           if (!ModelState.IsValid)
               return BadRequest(ModelState);
-          var user = await _userManager.Users.FirstOrDefaultAsync(u=> u.UserName == loginDto.Username.ToLower());
+
+          var identity = loginDto.Identifier.Trim();
+          var user = await _userManager.Users.FirstOrDefaultAsync(u=> u.Identifier == loginDto.Identifier.ToLower());
           if (user == null)
               return Unauthorized("Invalid username ");
           var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password , false);
@@ -36,8 +38,8 @@
           }
           return Ok(new NewUserDto()
           {
-              UserName = user.UserName,
-              Email = user.Email,
+              Identifier = user.Identifier,
+              Role = user.Role.ToString(),
               Token = _tokenService.CreateToken(user)
           });
             
@@ -52,8 +54,8 @@
                     return BadRequest(ModelState);
                 var appUser = new AppUser()
                 {
-                    UserName = registerDto.UserName,
-                    Email = registerDto.Email
+                    UserName = registerDto.Identifier,
+                    Role = UserRole.Customer
                 };
                 var createdUser = await _userManager.CreateAsync(appUser, registerDto.Password);
                 if (createdUser.Succeeded)
@@ -63,8 +65,8 @@
                     {
                         return Ok(new NewUserDto
                         {
-                            UserName = appUser.UserName,
-                            Email = appUser.Email,
+                            Identifier = appUser.Identifier,
+                            Role = appUser.Role.ToString(),
                             Token = _tokenService.CreateToken(appUser)
 
 

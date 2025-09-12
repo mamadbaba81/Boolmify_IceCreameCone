@@ -57,7 +57,7 @@
     });
     
     builder.Services.AddScoped<ITokenService , TokenService > ();
-    builder.Services.AddIdentity<AppUser, IdentityRole>(option =>
+    builder.Services.AddIdentity<AppUser, IdentityRole<int>>(option =>
         {
             option.Password.RequireDigit = true;
             option.Password.RequireLowercase = true;

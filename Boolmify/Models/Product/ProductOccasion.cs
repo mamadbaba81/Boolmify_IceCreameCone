@@ -9,4 +9,6 @@
         public int OccasionId { get; set; }
         
         public virtual Occasion Occasion { get; set; } = default!;
+        
+        
     }
