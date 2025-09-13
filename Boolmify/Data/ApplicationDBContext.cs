@@ -15,20 +15,37 @@
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            //product -- Category(1-n)
+            builder.Entity<Product>().HasOne(p=>p.Category).WithMany(p=>p.Product)
+                .HasForeignKey(p=>p.CategoryId).OnDelete(DeleteBehavior.Restrict); // ta hazf daste bandi ba eth hazf hame mahsolat nashe
             
-            builder.Entity<CartItemAddOn>()
-                .HasKey(ca => new { ca.CartItemId, ca.ProductAddOnId });
-
-            builder.Entity<OrderItemAddOn>()
-                .HasKey(oa => new { oa.OrderItemId, oa.ProductAddOnId });
-
-            builder.Entity<ProductOccasion>()
-                .HasKey(po => new { po.ProductId, po.OccasionId });
-
-            builder.Entity<ProductAddOnMap>() // مطمئن شو همین اسم توی کلاسته
-                .HasKey(pm => new { pm.ProductId, pm.ProductAddOnId });
+            //Produc--Comment (1-n)
+            builder.Entity<Product>().HasMany(p=>p.Comments).WithOne(p=>p.Product)
+                .HasForeignKey(p=>p.ProductId).OnDelete(DeleteBehavior.Cascade);//bepors chera
             
-            builder.Entity<CouponRedemption>().HasKey(c=>new {c.CouponId ,c.UserId , c.OrderId}  );
+            //Product--Review(1-n)
+            builder.Entity<Product>().HasMany(p=>p.Reviews).WithOne(p=>p.Product)
+                .HasForeignKey(p=>p.ProductId).OnDelete(DeleteBehavior.Cascade);
+            
+            //Product--Occasion(n-n)
+            builder.Entity<ProductOccasion>().HasKey(po => new { po.ProductId, po.OccasionId });
+
+            builder.Entity<ProductOccasion>().HasOne(po => po.Product).WithMany(po => po.ProductOccasions)
+                .HasForeignKey(po => po.ProductId);
+            
+            builder.Entity<ProductOccasion>().HasOne(po=>po.Occasion).WithMany(po=>po.ProductOccasions)
+                .HasForeignKey(po=>po.OccasionId);
+            
+            //product--AddOn(n-n)
+            
+            builder.Entity<ProductAddOnMap>().HasKey(pa=> new {pa.ProductAddOnId , pa.ProductId});
+
+            builder.Entity<ProductAddOnMap>().HasOne(pam => pam.Product).WithMany(pam => pam.AddOns)
+                .HasForeignKey(pam => pam.ProductId);
+            
+            builder.Entity<ProductAddOnMap>().HasOne(pam=>pam.ProductAddOn).WithMany(pam=>pam.ProductAddOnMaps)
+                .HasForeignKey(pam=>pam.ProductAddOnId);
+            
         }
 
         // Cart

@@ -16,6 +16,8 @@
         public virtual List<OrderItemAddOn>  OrderItemsAddOns { get; set; }  = new();
 
         public virtual List<CartItemAddOn> CartItemAddOns { get; set; } = new();
+        
+        public virtual List<ProductAddOnMap> ProductAddOnMaps { get; set; } = new();
 
 
 

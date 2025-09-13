@@ -36,6 +36,6 @@
         
         public virtual List<ProductOccasion> ProductOccasions { get; set; } = new(); 
         
-        public virtual List<ProductAddOnMap> ProductAddOnsMaps { get; set; } = new(); 
+        public virtual List<ProductAddOnMap> AddOns { get; set; } = new(); 
     }
     
