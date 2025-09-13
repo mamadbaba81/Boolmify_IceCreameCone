@@ -1,12 +1,11 @@
     using System.ComponentModel.DataAnnotations;
 
-    namespace Boolmify.Dtos.Ticket;
+    namespace Boolmify.Dtos.Payment;
 
-    public class UpdateTicketStatusDto
+    public class UpdatePaymentStatusDto
     {
         [Required]
-        public int  TicketId { get; set; }
+        public int  paymentId { get; set; }
         [Required]
         public string  Status { get; set; } =  default!;
-        
     }
