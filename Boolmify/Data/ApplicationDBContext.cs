@@ -111,12 +111,15 @@
             //Payment--Order(1-n)
             builder.Entity<Payment>().HasOne(p=>p.Order).WithMany(o=>o.Payments)
                 .HasForeignKey(p=>p.OrderId).OnDelete(DeleteBehavior.Cascade);
-            
+            //couponredemption composite Key
+            builder.Entity<CouponRedemption>()
+                .HasKey(cr => new { cr.CouponId, cr.UserId, cr.OrderId });
+
             //Coupon--CouponRedemption(1-n)
             builder.Entity<Coupon>().HasMany(c=>c.CouponRedemptions).WithOne(c=>c.Coupon)
                 .HasForeignKey(c=>c.CouponId).OnDelete(DeleteBehavior.Cascade);
             
-            //CouponEdemption--User(n-1)
+            //CouponRedemption--User(n-1)
             builder.Entity<CouponRedemption>().HasOne(cr=>cr.user).WithMany().HasForeignKey(cr=>cr.UserId).OnDelete(DeleteBehavior.Restrict);
             
             //CouponRedemption--Order(n-1)

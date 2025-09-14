@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("e70dc53f-0c63-4adb-8075-282825c4de87")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("Boolmify")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a69a7ef6e9aaa68f7203bd576efbc91346b51878")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b6b232a8ed91c382faa3b61ca8e7df7e7e429d12")]
 [assembly: System.Reflection.AssemblyProductAttribute("Boolmify")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Boolmify")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

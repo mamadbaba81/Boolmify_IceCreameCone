@@ -50,6 +50,12 @@
         option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         
     });
+    builder.Configuration
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddUserSecrets<Program>(optional: true) // این خط مهمه
+        .AddEnvironmentVariables();
+
     builder.Services.AddDbContext<ApplicationDBContext>(options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -92,6 +98,8 @@
                 
 
         };
+        Console.WriteLine("JWT Issuer from secrets: " + builder.Configuration["JWT:Issuer"]);
+
     });
     var app = builder.Build();
     // Configure the HTTP request pipeline.
