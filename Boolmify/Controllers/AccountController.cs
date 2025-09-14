@@ -1,3 +1,5 @@
+    using System.ComponentModel.DataAnnotations;
+    using System.Text.RegularExpressions;
     using Boolmify.Dtos.Account;
     using Boolmify.Interfaces;
     using Boolmify.Models;
@@ -28,7 +30,9 @@
               return BadRequest(ModelState);
 
           var identity = loginDto.Identifier.Trim();
-          var user = await _userManager.Users.FirstOrDefaultAsync(u=> u.Identifier == loginDto.Identifier.ToLower());
+          
+          var user = await _userManager.Users.FirstOrDefaultAsync
+              (u=> u.Identifier ==  identity || u.Email == identity || u.PhoneNumber == identity);
           if (user == null)
               return Unauthorized("Invalid username ");
           var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password , false);
@@ -55,8 +59,24 @@
                 var appUser = new AppUser()
                 {
                     UserName = registerDto.Identifier,
+                    Identifier = registerDto.Identifier,
                     Role = UserRole.Customer
                 };
+                if (registerDto.Identifier.Contains("@"))
+                {
+                    if(!new EmailAddressAttribute().IsValid(registerDto.Identifier))
+                        return BadRequest("Email address is not valid");
+                    appUser.Email = registerDto.Identifier;
+                }
+                else
+                {
+                    if(!Regex.IsMatch(registerDto.Identifier, @"^(?!([0-9])\1{9})09[0-9]{9}$"))
+                        return BadRequest("Invalid Phone number");
+                    appUser.PhoneNumber = registerDto.Identifier;
+                }
+                var ExistingUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Identifier == registerDto.Identifier.ToLower());
+                if (ExistingUser != null)
+                    return BadRequest("Username already exists");
                 var createdUser = await _userManager.CreateAsync(appUser, registerDto.Password);
                 if (createdUser.Succeeded)
                 {

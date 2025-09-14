@@ -5,7 +5,7 @@
     public class RegisterDto
     {
         [Required]
-        public string Identifier { get; set; } = default!;
+        public string? Identifier { get; set; } 
 
         [Required]
         public string? Password { get; set; } = default!;

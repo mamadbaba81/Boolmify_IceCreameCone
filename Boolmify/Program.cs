@@ -1,3 +1,4 @@
+    using Boolmify;
     using Boolmify.Data;
     using Boolmify.Helper;
     using Boolmify.Interfaces;
@@ -8,7 +9,9 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
-
+    
+    //Seed roles
+  
     var builder = WebApplication.CreateBuilder(args);           
 
     // Add services to the container.
@@ -98,10 +101,14 @@
                 
 
         };
-        Console.WriteLine("JWT Issuer from secrets: " + builder.Configuration["JWT:Issuer"]);
-
     });
     var app = builder.Build();
+
+    // Seed roles & admin
+    using (var scope = app.Services.CreateScope())
+    {
+        await SeedData.SeedRolesAndAdminAsync(scope.ServiceProvider);
+    }
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
