@@ -9,9 +9,7 @@
         public Order  Order { get; set; } = default!;
 
         public int  CourierId { get; set; }
-
-        public Courier  Courier { get; set; } =  default!;
-
+        
         public DateTime  AssignedAt { get; set; } = DateTime.Now;
         
         public DateTime? DeliveredAt { get; set; }

@@ -22,5 +22,7 @@
         public virtual List<Comment> Comments { get; set; } = new();
         
         public virtual List<Review> Reviews { get; set; } = new();
-        
+
+        public virtual List<Ticket> Tickets { get; set; } = new();
+
     }

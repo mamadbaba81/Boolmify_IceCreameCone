@@ -27,6 +27,8 @@
         public DateTime CreateAt { get; set; } =  DateTime.Now;
         
         public virtual List<OrderItem> OrderItems { get; set; } = new();
+
+        public virtual List<Ticket> Tickets { get; set; } = new();
         
         public virtual CouponRedemption? CouponRedemptions { get; set; } 
 

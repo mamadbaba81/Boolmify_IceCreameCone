@@ -12,7 +12,7 @@
 
         public int  UserId { get; set; }
 
-        public virtual AppUser  AppUser { get; set; } = default!;
+        public virtual AppUser  user { get; set; } = default!;
 
         public int  OrderId { get; set; }
         

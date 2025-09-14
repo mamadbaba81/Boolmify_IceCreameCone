@@ -19,5 +19,5 @@
 
         public string?  Slug { get; set; }
 
-        public virtual List<Product> Product { get; set; } = new();
+        public virtual List<Product> Products { get; set; } = new();
     }

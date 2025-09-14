@@ -8,7 +8,7 @@
 
         public int  UserId { get; set; }
 
-        public AppUser  AppUser { get; set; } = default!;
+        public AppUser  User { get; set; } = default!;
 
         public int  OrderId { get; set; }
 
