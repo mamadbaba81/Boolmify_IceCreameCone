@@ -1,0 +1,40 @@
+# Build
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# IDE / Editors
+.vs/
+.idea/
+*.DotSettings.user
+.ReSharper*/
+_Dependencies*/
+.DS_Store
+
+# Rider Logs
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/dictionaries
+.idea/**/shelf/
+
+# EF / Local DB
+*.sqlite
+*.db
+*.mdf
+*.ldf
+
+# Logs
+*.log
+
+# Secrets / Configs
+appsettings.Development.json
+appsettings.*.local.json
+secrets.json
+
+# Others
+launchSettings.json
