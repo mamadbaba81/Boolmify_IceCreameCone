@@ -29,10 +29,10 @@
           if (!ModelState.IsValid)
               return BadRequest(ModelState);
 
-          var identity = loginDto.Identifier.Trim();
+          var identity = loginDto.Identifier.Trim().ToLower();
           
           var user = await _userManager.Users.FirstOrDefaultAsync
-              (u=> u.Identifier ==  identity || u.Email == identity || u.PhoneNumber == identity);
+              (u=> u.Identifier.ToLower() ==  identity || u.Email.ToLower() == identity || u.PhoneNumber == identity);
           if (user == null)
               return Unauthorized("Invalid username ");
           var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password , false);

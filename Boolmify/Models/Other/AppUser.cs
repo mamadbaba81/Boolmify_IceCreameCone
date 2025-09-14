@@ -10,7 +10,7 @@
 
     public class AppUser:IdentityUser<int>
     {
-        public string Identifier { get; set; } = default!;
+        public string Identifier { get; set; } = string.Empty;
         
         public UserRole Role { get; set; } = UserRole.Customer;
 

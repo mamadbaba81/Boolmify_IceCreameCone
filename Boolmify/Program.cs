@@ -107,6 +107,7 @@
     // Seed roles & admin
     using (var scope = app.Services.CreateScope())
     {
+        var services = scope.ServiceProvider;
         await SeedData.SeedRolesAndAdminAsync(scope.ServiceProvider);
     }
     // Configure the HTTP request pipeline.

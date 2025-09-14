@@ -15,7 +15,7 @@
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            
+            builder.Entity<AppUser>().Property(a => a.Identifier).IsRequired();
             builder.Entity<AppUser>().HasIndex(u=>u.Identifier).IsUnique();
             //product -- Category(1-n)
             builder.Entity<Product>().HasOne(p=>p.Category).WithMany(p=>p.Products)
