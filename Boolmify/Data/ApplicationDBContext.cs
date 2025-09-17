@@ -135,9 +135,18 @@
             //Ticket--Order(n-1)
             builder.Entity<Ticket>().HasOne(t=>t.Order).WithMany(t=>t.Tickets).HasForeignKey(t=>t.OrderId).OnDelete(DeleteBehavior.Cascade);
             
+            //Ticket--TicketMessage(1-n)
+            builder.Entity<TicketMessage>().HasOne(tm=>tm.Ticket).WithMany(tm=>tm.Messages)
+                .HasForeignKey(tm=>tm.TicketId).OnDelete(DeleteBehavior.Cascade);
+            
+            builder.Entity<TicketMessage>().HasOne(tm=>tm.Sender).WithMany()
+                .HasForeignKey(tm=>tm.SenderId).OnDelete(DeleteBehavior.Restrict);
+            
             //Delivery--Order(1-1)
             builder.Entity<Delivery>().HasOne(d=>d.Order).WithOne(d=>d.Delivery)
                 .HasForeignKey<Delivery>(d=>d.OrderId).OnDelete(DeleteBehavior.Cascade);
+            
+            
             
         }
 
@@ -170,4 +179,5 @@
         public DbSet<Payment> Payments { get; set; } = default!;
         public DbSet<Ticket> Tickets { get; set; } = default!;
         public DbSet<FAQ> FAQs { get; set; } = default!;
+        public DbSet<TicketMessage> TicketMessages { get; set; } = default!;
     }
