@@ -2,7 +2,9 @@
     using Boolmify.Data;
     using Boolmify.Helper;
     using Boolmify.Interfaces;
+    using Boolmify.Interfaces.ADminRepository;
     using Boolmify.Models;
+    using Boolmify.Repository.AdminRepository;
     using Boolmify.Services;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Identity;
@@ -66,6 +68,7 @@
     });
     
     builder.Services.AddScoped<ITokenService , TokenService > ();
+    builder.Services.AddScoped<IAdminUserService, AdminUserRepository>();
     builder.Services.AddIdentity<AppUser, IdentityRole<int>>(option =>
         {
             option.Password.RequireDigit = true;

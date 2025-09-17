@@ -76,7 +76,7 @@
             };
         }
 
-        public async Task<UserDto> CreateAsynce(CreateUserDto userDto)
+        public async Task<UserDto> CreateAsync(CreateUserDto userDto)
         {
             var user = new AppUser
             {
@@ -107,7 +107,7 @@
             };
         }
 
-        public async Task<UserDto> UpdateAsynce(int id, UpdateUserDto userDto)
+        public async Task<UserDto> UpdateAsync(int id, UpdateUserDto userDto)
         {
             var user = await _Context.Users.FindAsync(id);
             if (user == null) throw new Exception("User not found");
@@ -150,7 +150,7 @@
             }
         
 
-        public async Task<bool> DeleteAsynce(int id)
+        public async Task<bool> DeleteAsync(int id)
             {
               var user = await _Context.Users.FindAsync(id);
               if (user == null) throw new Exception("User not found");

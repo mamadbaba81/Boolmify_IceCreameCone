@@ -11,11 +11,11 @@
         
         Task<UserDto?> GetByIdAsync(int id);
         
-        Task<UserDto> CreateAsynce(CreateUserDto userDto);
+        Task<UserDto> CreateAsync(CreateUserDto userDto);
         
-        Task<UserDto> UpdateAsynce(int id, UpdateUserDto userDto);
+        Task<UserDto> UpdateAsync(int id, UpdateUserDto userDto);
         
-        Task<bool> DeleteAsynce(int id);
+        Task<bool> DeleteAsync(int id);
         
         Task<bool> ChangeRoleAsync(int UserId , string newRole);
         
