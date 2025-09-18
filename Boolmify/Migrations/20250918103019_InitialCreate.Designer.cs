@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Boolmify.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20250917135902_InitAgain")]
-    partial class InitAgain
+    [Migration("20250918103019_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

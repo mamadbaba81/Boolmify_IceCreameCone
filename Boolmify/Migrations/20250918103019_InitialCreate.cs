@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Boolmify.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -428,7 +428,6 @@ namespace Boolmify.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: false),
                     Subject = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -616,6 +615,34 @@ namespace Boolmify.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TicketMessages",
+                columns: table => new
+                {
+                    TicketMessageId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TicketId = table.Column<int>(type: "int", nullable: false),
+                    SenderId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TicketMessages", x => x.TicketMessageId);
+                    table.ForeignKey(
+                        name: "FK_TicketMessages_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TicketMessages_Tickets_TicketId",
+                        column: x => x.TicketId,
+                        principalTable: "Tickets",
+                        principalColumn: "TicketId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -848,6 +875,16 @@ namespace Boolmify.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TicketMessages_SenderId",
+                table: "TicketMessages",
+                column: "SenderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TicketMessages_TicketId",
+                table: "TicketMessages",
+                column: "TicketId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tickets_OrderId",
                 table: "Tickets",
                 column: "OrderId");
@@ -907,7 +944,7 @@ namespace Boolmify.Migrations
                 name: "Reviews");
 
             migrationBuilder.DropTable(
-                name: "Tickets");
+                name: "TicketMessages");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -928,19 +965,22 @@ namespace Boolmify.Migrations
                 name: "Occasions");
 
             migrationBuilder.DropTable(
-                name: "Carts");
+                name: "Tickets");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "Carts");
 
             migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }
