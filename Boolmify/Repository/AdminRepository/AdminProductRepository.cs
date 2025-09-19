@@ -4,6 +4,7 @@
     using Boolmify.Dtos.Product;
     using Boolmify.Dtos.Review;
     using Boolmify.Interfaces.ADminRepository;
+    using Boolmify.Models;
     using Microsoft.EntityFrameworkCore;
 
     namespace Boolmify.Repository.AdminRepository;
@@ -91,20 +92,20 @@
             return product;
         }
 
-        public async Task<ProductDto?> GetAsync(int id)
+        public async Task<ProductDto?> GetByIdAsync(int id)
         {
             var product = await _Context.Products
-                .Include(p => p.Comments)
+                .Include(p => p.Comments).ThenInclude(comment => comment.User).Include(product => product.Comments)
+                .ThenInclude(comment => comment.Replies).ThenInclude(comment => comment.User)
                 .Include(p => p.Reviews)
                 .Include(p => p.ProductOccasions)
                 .ThenInclude(po => po.Occasion)
-                .Include(p => p.AddOns)
-                .ThenInclude(pa => pa.ProductAddOn)
+                .Include(p => p.AddOns).ThenInclude(pa => pa.ProductAddOn)
                 .FirstOrDefaultAsync();
             if(product==null)return null;
             return new ProductDto
             {
-                ProductId = product.Id,
+                ProductId = product.ProductId,
                 ProductName = product.ProductName,
                 Price = product.Price,
                 Description = product.Description,
@@ -119,7 +120,7 @@
 
                 Comments = product.Comments.Select(c => new CommentDto
                 {
-                    CommentId = c.Id,
+                    CommentId = c.CommentId,
                     ProductId = c.ProductId,
                     UserName = c.User.UserName,
                     Content = c.Content,
@@ -127,7 +128,7 @@
                     ParentCommentId = c.ParentCommentId,
                     Replies = c.Replies.Select(r => new CommentDto
                     {
-                        CommentId = r.Id,
+                        CommentId = r.CommentId,
                         ProductId = r.ProductId,
                         UserName = r.User.UserName,
                         Content = r.Content,
@@ -138,7 +139,7 @@
 
                 Reviews = product.Reviews.Select(r => new ReviewDto
                 {
-                    ReviewId = r.Id,
+                    ReviewId = r.ReviewId,
                     Rating = r.Rating,
                     Comment = r.Comment
                 }).ToList(),
@@ -152,17 +153,59 @@
 
                 AddOns = product.AddOns.Select(a => new ProductAddonDto
                 {
-                    AddOnId = a.ProductAddOnId,
-                    AddOnName = a.ProductAddOn.ProductAddOnsName,
+                    ProductAddOnId = a.ProductAddOnId,
+                    ProductAddOnsName = a.ProductAddOn.ProductAddOnsName,
                     Price = a.ProductAddOn.Price
                 }).ToList(),
 
             };
         }
 
-        public Task<ProductDto> CreateAsync(CreateProductDto dto)
+        public async Task<ProductDto> CreateAsync(CreateProductDto dto)
         {
-            throw new NotImplementedException();
+            var product = new Product
+            {
+                ProductName = dto.ProductName,
+                Price = dto.Price,
+                StockQuantity = dto.StockQuantity,
+                CreatedAt = DateTime.UtcNow,
+                CategoryId = dto.CategoryId,
+                Sku = dto.Sku,
+                Slug = dto.Slug,
+                Description = dto.Description,
+                ImageUrl = dto.ImageUrl,
+                DiscountPrice = dto.DiscountPrice,
+                IsActive = dto.IsActive,
+
+            };
+            _Context.Products.Add(product);
+            await _Context.SaveChangesAsync();
+            if (dto.OccasionIds != null && dto.OccasionIds.Any())
+            {
+                foreach (var occId in dto.OccasionIds)
+                {
+                    _Context.ProductOccasions.Add(new ProductOccasion
+                    {
+                        OccasionId = occId,
+                        ProductId = product.ProductId,
+                    });
+                }
+            }
+
+            if (dto.AddOnIds != null && dto.AddOnIds.Any())
+            {
+                foreach (var addOnId in dto.AddOnIds)
+                {
+                    _Context.ProductAddOnMaps.Add(new ProductAddOnMap
+                    {
+                        ProductId = product.ProductId,
+                        ProductAddOnId = addOnId
+                    });
+                }
+            }
+            await _Context.SaveChangesAsync();
+            
+            return await GetByIdAsync(product.ProductId) ?? throw new Exception("Product creation failed");
         }
 
         public Task<ProductDto> UpdateAsync(UpdateProductDto dto)

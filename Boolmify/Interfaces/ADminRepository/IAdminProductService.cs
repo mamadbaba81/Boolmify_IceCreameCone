@@ -6,7 +6,8 @@
     public interface IAdminProductService
     {
         Task<IEnumerable<ProductDto>> GetAllAsync(string? search, int pageNumber, int pageSize);
-        Task<ProductDto?> GetAsync(int id);
+        
+        Task<ProductDto?> GetByIdAsync(int id);
         
         Task<ProductDto> CreateAsync(CreateProductDto dto);
         
