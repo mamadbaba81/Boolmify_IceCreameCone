@@ -36,6 +36,8 @@
         
         public virtual List<ProductOccasion> ProductOccasions { get; set; } = new(); 
         
-        public virtual List<ProductAddOnMap> AddOns { get; set; } = new(); 
+        public virtual List<ProductAddOnMap> AddOns { get; set; } = new();
+
+        public DateTime  CreatedAt { get; set; } = DateTime.Now;
     }
     

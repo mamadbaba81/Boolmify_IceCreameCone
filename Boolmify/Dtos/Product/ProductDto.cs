@@ -35,5 +35,7 @@
         
         public  List<ProductOccasionDto> ProductOccasions { get; set; } = new(); 
         
-        public List<ProductAddonDto> AddOns { get; set; } = new(); 
+        public List<ProductAddonDto> AddOns { get; set; } = new();
+
+        public DateTime  CreatedAt { get; set; } 
     }

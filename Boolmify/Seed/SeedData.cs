@@ -39,6 +39,7 @@
                 UserName = adminIdentifier,
                 Email = adminEmail,
                 Identifier = adminIdentifier,
+                Role = UserRole.Admin,
                 EmailConfirmed = true // ایمیل رو تأییدشده می‌ذاره
             };
 

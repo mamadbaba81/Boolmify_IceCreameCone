@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Boolmify.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20250918103019_InitialCreate")]
+    [Migration("20250918143455_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

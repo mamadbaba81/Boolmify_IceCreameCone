@@ -41,7 +41,7 @@
             return CreatedAtAction(nameof(GetUserByID), new {id = user.Id}, user);
         }
 
-        [HttpPut("Update")]
+        [HttpPut("Update/{id}")]
         public async Task<ActionResult<UserDto>> UpdateUser([FromRoute] int id ,[FromBody] UpdateUserDto dto  )
         {
             var  user = await _UserService.UpdateAsync(id, dto);
@@ -49,7 +49,7 @@
         }
         
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("delete/{id}/")]
         public async Task<ActionResult> DeleteUser([FromRoute] int id)
         {
             var user = await _UserService.DeleteAsync(id);

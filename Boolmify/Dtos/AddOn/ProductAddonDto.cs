@@ -2,12 +2,9 @@
 
     public class ProductAddonDto
     {
-        public class ProductAddOn
-        {
             public int ProductAddOnId { get; set; }
             
             public string ProductAddOnsName { get; set; }
             
             public decimal Price { get; set; }
-        }
     }
