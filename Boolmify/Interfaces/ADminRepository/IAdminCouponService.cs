@@ -4,7 +4,7 @@
 
     public interface IAdminCouponService
     {
-        Task<IEnumerable<CouponDto>> GetAllAsync();
+        Task<IEnumerable<CouponDto>> GetAllAsync(string? search = null, int pageNumber = 1, int pageSize = 10);
         
         Task<CouponDto?> GetByIdAsync(int id);
         
@@ -14,7 +14,7 @@
         
         Task<bool> DeleteAsync(int id);
         
-        Task<CouponDto> ToggleActiveAsync(int id ,  bool isactive);
+        Task<bool> ToggleActiveAsync(int id );
         
         
     }

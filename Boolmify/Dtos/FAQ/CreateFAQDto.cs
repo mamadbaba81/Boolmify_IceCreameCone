@@ -10,4 +10,6 @@
         [Required]
         [StringLength(1000)]
         public string Answer { get; set; } = default!;
+        
+        public bool  IsActive { get; set; } 
     }

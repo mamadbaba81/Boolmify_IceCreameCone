@@ -4,7 +4,7 @@
 
     public interface IAdminFAQService
     {
-        Task<IEnumerable<FAQDto>>  GetAllAsync();
+        Task<IEnumerable<FAQDto>>  GetAllAsync(string? search = null, int pageNumber = 1, int pageSize = 10);
         
         Task<FAQDto?> GetByIdAsync(int id);
         
@@ -12,7 +12,8 @@
         
         Task<FAQDto> UpdateAsync(UpdateFAQDto dto);
         
-        Task<bool> DeleteAsync(int id);
+        Task<bool> ToogleActiveAsync (int id);
+        Task<bool> DeleteAsync (int id);
         
         
     }
