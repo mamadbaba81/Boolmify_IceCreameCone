@@ -5,9 +5,9 @@
     public class CreateTicketMessageDto
     {
         [Required]
-        public int TicketId { get; set; }
-
+        public int  SenderId { get; set; }
+        
         [Required]
         [StringLength(2000)]
-        public string Message { get; set; } = default!;
+        public string Content { get; set; } = default!;
     }

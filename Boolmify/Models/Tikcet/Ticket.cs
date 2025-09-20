@@ -9,6 +9,7 @@
         public AppUser  User { get; set; } = default!;
         public int  OrderId { get; set; }
         public Order  Order { get; set; }
+        
         [Required , MaxLength(200)]
         public string  Subject { get; set; } = default!;
         [Required]

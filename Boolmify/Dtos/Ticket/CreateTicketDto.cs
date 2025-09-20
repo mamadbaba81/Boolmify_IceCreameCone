@@ -4,7 +4,11 @@
 
     public class CreateTicketDto
     {
-        public int? OrderId { get; set; } // اجباری نیست، ممکنه تیکت عمومی باشه
+        [Required]
+        public int  UserId { get; set; }
+        
+        [Required]
+        public int OrderId { get; set; } // اجباری نیست، ممکنه تیکت عمومی باشه
 
         [Required]
         [StringLength(100)]

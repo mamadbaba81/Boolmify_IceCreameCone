@@ -1,4 +1,5 @@
     using System.ComponentModel.DataAnnotations;
+    using Boolmify.Models;
 
     namespace Boolmify.Dtos.Ticket;
 
@@ -7,6 +8,6 @@
         [Required]
         public int  TicketId { get; set; }
         [Required]
-        public string  Status { get; set; } =  default!;
+        public TicketStatus  Status { get; set; } 
         
     }
