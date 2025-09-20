@@ -17,7 +17,9 @@
         
         Task<bool> ToggleActiveAsync(int id ,  bool isActive);
         
-        Task<bool> UpdateStockAsync(int id, int newquantity);
+        Task<bool> SetStockAsync(int id, int newquantity);
+        
+        Task<bool> AddjustStockAsync(int id, int addquantity);
         
         Task<bool> UpdatePriceAsync(int id, Decimal newprice , decimal? discountprice = null);
         

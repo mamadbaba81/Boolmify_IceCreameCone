@@ -208,28 +208,104 @@
             return await GetByIdAsync(product.ProductId) ?? throw new Exception("Product creation failed");
         }
 
-        public Task<ProductDto> UpdateAsync(UpdateProductDto dto)
+        public async Task<ProductDto> UpdateAsync(UpdateProductDto dto)
         {
-            throw new NotImplementedException();
+            var product = await _Context.Products.Include(p=>p.ProductOccasions)
+                .Include(p=>p.AddOns).FirstOrDefaultAsync(p=>p.ProductId == dto.ProductId);
+            if (product == null) return null;
+            
+            if (dto.CategoryId.HasValue)  product.CategoryId = dto.CategoryId.Value;
+            if (!string.IsNullOrWhiteSpace(dto.Sku))  product.Sku = dto.Sku;
+            if (!string.IsNullOrWhiteSpace(dto.Slug))  product.Slug = dto.Slug;
+            if (!string.IsNullOrWhiteSpace(dto.Description))  product.Description = dto.Description;
+            if (!string.IsNullOrWhiteSpace(dto.ImageUrl))  product.ImageUrl = dto.ImageUrl;
+            if (!string.IsNullOrWhiteSpace(dto.ProductName)) product.ProductName = dto.ProductName;
+            if (dto.DiscountPrice.HasValue) product.DiscountPrice = dto.DiscountPrice.Value;
+            if (dto.IsActive.HasValue) product.IsActive = dto.IsActive.Value;
+            if (dto.Price.HasValue) product.Price = dto.Price.Value;
+            if (dto.StockQuantity.HasValue) product.StockQuantity = dto.StockQuantity.Value;
+
+            if (dto.OccasionIds != null)
+            {
+                _Context.ProductOccasions.RemoveRange(product.ProductOccasions);
+                foreach (var occid in dto.OccasionIds)
+                {
+                    _Context.ProductOccasions.Add(new ProductOccasion
+                    {
+                        ProductId = product.ProductId,
+                        OccasionId = occid
+                    });
+                }
+                
+            }
+
+            if (dto.AddOnIds != null)
+            {
+                _Context.ProductAddOnMaps.RemoveRange(product.AddOns);
+                foreach (var addOnId in dto.AddOnIds)
+                {
+                    _Context.ProductAddOnMaps.Add(new ProductAddOnMap
+                    {
+                        ProductId = product.ProductId,
+                        ProductAddOnId = addOnId
+                    });
+                    
+                }
+            }
+            await _Context.SaveChangesAsync();
+            return await GetByIdAsync(product.ProductId);
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var product = await _Context.Products.Include(p => p.ProductOccasions).Include(p => p.AddOns)
+                .FirstOrDefaultAsync(p => p.ProductId == id);
+            if (product == null) return false;
+            _Context.ProductOccasions.RemoveRange(product.ProductOccasions);
+            _Context.ProductAddOnMaps.RemoveRange(product.AddOns);
+            _Context.Products.Remove(product);
+            await _Context.SaveChangesAsync();
+            return true;
         }
 
-        public Task<bool> ToggleActiveAsync(int id, bool isActive)
+        public async Task<bool> ToggleActiveAsync(int id, bool isActive)
         {
-            throw new NotImplementedException();
+            var product = await _Context.Products.FindAsync(id);
+            if (product == null) return false;
+            product.IsActive = !product.IsActive;
+            await _Context.SaveChangesAsync();
+            return true;
+
         }
 
-        public Task<bool> UpdateStockAsync(int id, int newquantity)
+        public async Task<bool> AddjustStockAsync(int id, int addquantity)
         {
-            throw new NotImplementedException();
+            var  product = await _Context.Products.FindAsync(id);
+            if (product == null) return false;
+            product.StockQuantity += addquantity;
+            if (product.StockQuantity < 0) product.StockQuantity = 0;
+            await _Context.SaveChangesAsync();
+            return true;
         }
 
-        public Task<bool> UpdatePriceAsync(int id, decimal newprice, decimal? discountprice = null)
+        public async Task<bool> SetStockAsync(int id, int newquantity)
         {
-            throw new NotImplementedException();
+            var  product = await _Context.Products.FindAsync(id);
+            if (product == null) return false;
+            product.StockQuantity = newquantity < 0 ?  0 : newquantity;
+            await _Context.SaveChangesAsync();
+            return true;
+        }
+        
+
+        public async Task<bool> UpdatePriceAsync(int id, decimal newprice, decimal? discountprice = null)
+        {
+           var  product = await _Context.Products.FindAsync(id);
+           if (product == null) return false;
+           product.Price = newprice;
+           if (discountprice.HasValue) product.DiscountPrice = discountprice.Value;
+           else  product.DiscountPrice = null;
+           await _Context.SaveChangesAsync();
+           return true;
         }
     }
