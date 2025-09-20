@@ -4,11 +4,11 @@
 
     public interface IAdminOrderService
     {
-        Task<IEnumerable<OrderDto>> GetAllAsync(string? status =  null , int? customerId = null);
+        Task<IEnumerable<OrderDto>> GetAllAsync(int pageNumber = 1, int pageSize = 10, int? userId = null, string? status = null);
         
         Task<OrderDto> GetByIdAsync(int id);
         
-        Task<OrderDto> UpdateStatusAsync(int orderId , string newstatus);
+        Task<OrderDto> UpdateStatusAsync(int id , string newStatus);
         Task<bool> DeleteAsync(int id);
         
     }

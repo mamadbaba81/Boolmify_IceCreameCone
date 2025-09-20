@@ -11,12 +11,11 @@
             public decimal Amount { get; set; }
 
             public PaymentMethod Method { get; set; } =  PaymentMethod.Online;
-
             public PaymentStatus  Status { get; set; } =  PaymentStatus.Pending;
 
             public DateTime  CreateAt { get; set; }=  DateTime.Now;
 
-            public DateTime  PaidAt { get; set; } 
+            public DateTime  PaidAt { get; set; } =DateTime.Now;
             
             public string? TransactionId { get; set; }
         }
