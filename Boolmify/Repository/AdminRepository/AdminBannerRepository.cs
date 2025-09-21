@@ -88,4 +88,9 @@
             await _Context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<bool> toggleActiveBannerAsyndc(int idd)
+        {
+            
+        }
     }
