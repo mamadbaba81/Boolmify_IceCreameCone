@@ -17,41 +17,53 @@
         }
     
         [HttpGet("GetAllBanners")]
-        public async Task<List<BannerDto>> GetAllBannersAsync()
+        public async Task<ActionResult<IEnumerable<BannerDto>>> GetAllBannersAsync()
         {
-            
+            var banners = await _bannerService.GetAllBannersAsync();
+            return Ok(banners);
         }
         
         
         [HttpGet("GetByIdBanner/{id}")]
-        public async Task<BannerDto?> GetBannerAsync(int id)
+        public async Task<ActionResult<BannerDto?>> GetByIdBannerAsync(int id)
         {
-            
+            var banner = await _bannerService.GetByIdBannerAsync(id);
+            if (banner == null) return NotFound("Banner not found");
+            return Ok(banner);
         }
     
         [HttpPost("CreateBanner")]
-        public async Task<BannerDto> CreateBannerAsync(CreateBannerDto BannerDto)
+        public async Task<ActionResult<BannerDto>> CreateBannerAsync(CreateBannerDto dto)
         {
-            
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+            var banner = await _bannerService.CreateBannerAsync(dto);
+            return CreatedAtAction(nameof(GetByIdBannerAsync),new {id = banner.BannerId},  banner);
         }
     
         [HttpPut("UpdateBanner")]
-        public async Task<BannerDto?> UpdateBannerAsync(UpdateBannerDto BannerDto)
+        public async Task<ActionResult<BannerDto?>> UpdateBannerAsync ( int id ,UpdateBannerDto dto)
         {
-            
+            if (id != dto.BannerId)  return BadRequest("Banner ID mismatch");
+            var updated =  await _bannerService.UpdateBannerAsync(dto);
+            if (updated == null) return NotFound("Banner not found");
+            return Ok(updated);
         }
     
         [HttpPatch("ToogleBanner/{id}")]
-        public async Task<BannerDto?> ToggleActiveBannerAsync(int id)
+        public async Task<IActionResult> ToggleActiveBannerAsync(int id)
         {
-            
-            
+            var result = await _bannerService.toggleActiveBannerAsync(id);
+            if (!result) return NotFound("Banner not found");
+            return Ok("Banner status updated");
+
         }
         
         [HttpDelete("DeleteBanner/{id}")]
-        public async Task<bool> DeleteBannerAsync(int id)
+        public async Task<IActionResult> DeleteBannerAsync(int id)
         {
-            
+            var deleted = await _bannerService.DeleteBannerAsync(id);
+            if(!deleted) return NotFound("Banner not found");
+            return Ok("Banner deleted successfully");
         }
         
         

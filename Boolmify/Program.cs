@@ -69,6 +69,16 @@
     
     builder.Services.AddScoped<ITokenService , TokenService > ();
     builder.Services.AddScoped<IAdminUserService, AdminUserRepository>();
+    builder.Services.AddScoped<IAdminBannerService, AdminBannerRepository>();
+    builder.Services.AddScoped<IAdminCategoryService, AdminCategoryRepository>();
+    builder.Services.AddScoped<IAdminCouponService, AdminCouponRepository>();
+    builder.Services.AddScoped<IAdminFAQService, AdminFAQRepository>();
+    builder.Services.AddScoped<IAdminOccasionService, AdminOccasionRepository>();
+    builder.Services.AddScoped<IAdminOrderService, AdminOrderRepository>();
+    builder.Services.AddScoped<IAdminProductService, AdminProductRepository>();
+    builder.Services.AddScoped<IAdminTicketService, AdminTicketRepository>();
+    
+    
     builder.Services.AddIdentity<AppUser, IdentityRole<int>>(option =>
         {
             option.Password.RequireDigit = true;
