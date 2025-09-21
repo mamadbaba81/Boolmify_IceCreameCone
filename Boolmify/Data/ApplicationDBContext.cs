@@ -171,6 +171,7 @@
         public DbSet<CouponRedemption> CouponRedemptions { get; set; } = default!;
 
         // Other
+        public DbSet<Banner> Banners { get; set; } = default!;
         public DbSet<Category> Categories { get; set; } = default!;
         public DbSet<Comment> Comments { get; set; } = default!;
         public DbSet<Review> Reviews { get; set; } = default!;
