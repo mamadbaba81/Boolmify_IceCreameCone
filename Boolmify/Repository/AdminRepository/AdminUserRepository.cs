@@ -165,7 +165,7 @@
                var user = await _Context.Users.FindAsync(UserId);
                if (user == null) throw new Exception("User not found");
                var roles = await _UserManager.GetRolesAsync(user);
-               if (!roles.Any())
+               if (roles.Any())
                {
                    var removeRole = await _UserManager.RemoveFromRolesAsync(user, roles);
                    if (!removeRole.Succeeded)
@@ -174,12 +174,17 @@
                        throw new Exception($" khata dar hazf naghsh{errors}");
                    }
                }
-               var addRole = await _UserManager.AddToRoleAsync(user, newRole);
-               if (!addRole.Succeeded)
+
+               if (!roles.Contains(newRole))
                {
-                   var errors = string.Join(", ", addRole.Errors.Select(x => x.Description));
-                   throw new Exception($" khata dar addkardan naghsh{errors}");
+                   var addRole = await _UserManager.AddToRoleAsync(user, newRole);
+                   if (!addRole.Succeeded)
+                   {
+                       var errors = string.Join(", ", addRole.Errors.Select(x => x.Description));
+                       throw new Exception($" khata dar addkardan naghsh{errors}");
+                   }
                }
+
                return true;
             }
 

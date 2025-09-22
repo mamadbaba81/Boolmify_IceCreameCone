@@ -17,6 +17,8 @@
             base.OnModelCreating(builder);
             builder.Entity<AppUser>().Property(a => a.Identifier).IsRequired();
             builder.Entity<AppUser>().HasIndex(u=>u.Identifier).IsUnique();
+            //FAQ
+            builder.Entity<FAQ>().Property(a => a.IsActive).HasDefaultValue(true);
             //product -- Category(1-n)
             builder.Entity<Product>().HasOne(p=>p.Category).WithMany(p=>p.Products)
                 .HasForeignKey(p=>p.CategoryId).OnDelete(DeleteBehavior.Restrict); // ta hazf daste bandi ba eth hazf hame mahsolat nashe

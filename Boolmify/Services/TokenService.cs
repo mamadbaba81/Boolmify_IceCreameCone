@@ -3,6 +3,7 @@
          using System.Text;
          using Boolmify.Interfaces;
          using Boolmify.Models;
+         using Microsoft.AspNetCore.Identity;
          using Microsoft.IdentityModel.Tokens;
      
          namespace Boolmify.Services;
@@ -12,21 +13,30 @@
              private readonly IConfiguration _config;
      
              private readonly SymmetricSecurityKey _key;
+             
+             private readonly UserManager<AppUser> _UserManager;
      
-             public TokenService(IConfiguration config)
+             public TokenService(IConfiguration config ,  UserManager<AppUser> userManager)
              {
                  _config = config;
                  _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:SigninKey"]));
+                 _UserManager = userManager;
+                 
              }
          
-             public string CreateToken(AppUser user)
+             public async Task<string> CreateToken(AppUser user)
              {
                  var claims = new List<Claim>
                  {
                      new Claim(ClaimTypes.NameIdentifier, user.Identifier),
      
-                     new Claim(ClaimTypes.Role, user.Role.ToString()),
+                     new Claim(ClaimTypes.Name, user.UserName ?? user.Identifier),
                  };
+                 var roles = await _UserManager.GetRolesAsync(user);
+                 foreach (var role in roles)
+                 {
+                     claims.Add(new Claim(ClaimTypes.Role, role));
+                 }
                  var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
                  var tokenDescriptor = new SecurityTokenDescriptor
                  {

@@ -57,18 +57,28 @@
         }
         
 
-        public async Task<BannerDto?> UpdateBannerAsync(UpdateBannerDto dto)
+        public async Task<BannerDto?> UpdateBannerAsync(int id ,UpdateBannerDto dto)
         {
-            var banner = await _Context.Banners.FindAsync(dto.BannerId);
+            var banner = await _Context.Banners.FindAsync(id);
             
             if (banner == null) return null;
             if (!string.IsNullOrWhiteSpace(dto.Title)) banner.Title = dto.Title;
             if (!string.IsNullOrWhiteSpace(dto.ImageUrl)) banner.ImageUrl = dto.ImageUrl;
             if (!string.IsNullOrWhiteSpace(dto.LinkUrl)) banner.LinkUrl = dto.LinkUrl;
             if (dto.IsActive.HasValue) banner.IsActive = dto.IsActive.Value;
-            
+            banner.UpdatedAt = DateTime.Now;
             await _Context.SaveChangesAsync();
-            return await GetByIdBannerAsync(banner.BannerId);
+
+            return new BannerDto
+            {
+                BannerId = banner.BannerId,
+                Title = banner.Title,
+                ImageUrl = banner.ImageUrl,
+                LinkUrl = banner.LinkUrl,
+                IsActive = banner.IsActive,
+                CreatedAt = banner.CreatedAt,
+                UpdatedAt = banner.UpdatedAt
+            };
         }
 
         public async Task<bool> DeleteBannerAsync(int id)

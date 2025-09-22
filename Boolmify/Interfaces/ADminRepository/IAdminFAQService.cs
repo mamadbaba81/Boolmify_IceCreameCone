@@ -12,7 +12,7 @@
         
         Task<FAQDto> UpdateAsync(UpdateFAQDto dto);
         
-        Task<bool> ToogleActiveAsync (int id);
+        Task<FAQDto> ToogleActiveAsync (int id);
         Task<bool> DeleteAsync (int id);
         
         

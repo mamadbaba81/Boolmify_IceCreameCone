@@ -27,8 +27,8 @@
             return Ok(result);
         }
 
-        [HttpGet("GetById/{id}")]
-        public async Task<ActionResult<FAQDto>> GetFAQByIDAsync(int id)
+        [HttpGet("GetById/{id}" , Name = "GetById")]
+        public async Task<ActionResult<FAQDto>> GetByIdAsync(int id)
         {
             var faq = await _FAQService.GetByIdAsync(id);
             if (faq == null) return NotFound();
@@ -39,7 +39,7 @@
         public async Task<ActionResult<FAQDto>> CreateFAQAsync( CreateFAQDto dto)
         {
             var faq = await _FAQService.CreateAsync(dto);
-            return CreatedAtAction(nameof(GetFAQByIDAsync), new { id = faq.FaqId }, faq);
+            return CreatedAtRoute("GetById",new { id = faq.FaqId }, faq);
             
         }
 
@@ -60,12 +60,12 @@
             return Ok(faq);
         }
 
-        [HttpPatch("toggleActive/{id}")]
+        [HttpPatch("{id}/ToggleActive")]
         public async Task<ActionResult> ToggleActiveAsync(int id)
         {
             var faq = await _FAQService.ToogleActiveAsync(id);
-            if (!faq) return NotFound("FAQ not found");
-            return Ok("FAQ status toggled");
+            if (faq == null) return NotFound("FAQ not found");
+            return Ok(new { message = "FAQ status toggled", newStatus = faq.IsActive });
         }
         
         

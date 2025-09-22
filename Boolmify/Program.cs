@@ -1,3 +1,4 @@
+    using System.Security.Claims;
     using Boolmify;
     using Boolmify.Data;
     using Boolmify.Helper;
@@ -110,9 +111,7 @@
             ValidAudience = builder.Configuration["Jwt:Audience"],
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SigninKey"])),
-            
-                
-
+            RoleClaimType = ClaimTypes.Role,
         };
     });
     var app = builder.Build();

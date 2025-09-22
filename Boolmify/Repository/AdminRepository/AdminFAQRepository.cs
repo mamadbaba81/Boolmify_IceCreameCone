@@ -26,6 +26,7 @@
                   FaqId = f.FaqId,
                   Question = f.Question,
                   Answer = f.Answer,
+                  IsActive = f.IsActive,
                   CreatedAt = f.CreatedAt
               }).ToListAsync();
 
@@ -40,6 +41,7 @@
                 FaqId = faq.FaqId,
                 Question = faq.Question,
                 Answer = faq.Answer,
+                IsActive = faq.IsActive,
                 CreatedAt = faq.CreatedAt
 
             };
@@ -70,15 +72,21 @@
            return await GetByIdAsync(faq.FaqId);
         }
 
-        public async Task<bool> ToogleActiveAsync(int id)
+        public async Task<FAQDto?> ToogleActiveAsync(int id)
         {
-            var faq = await _Context.FAQs.FindAsync(id);
-            if (faq == null) return false;
+            var faq = await _Context.FAQs.FirstOrDefaultAsync(f=>f.FaqId == id);
+            if (faq == null) return null;
             faq.IsActive = !faq.IsActive;
             await _Context.SaveChangesAsync();
-            return true;
+             return await _Context.FAQs.Select(f=>new FAQDto
+            {
+                FaqId = faq.FaqId,
+                Question = faq.Question,
+                Answer = faq.Answer,
+                CreatedAt = faq.CreatedAt,
+                IsActive = faq.IsActive
+            }).FirstOrDefaultAsync();;
         }
-        
         public async Task<bool> DeleteAsync(int id)
         {
             var faq = await _Context.FAQs.FindAsync(id);

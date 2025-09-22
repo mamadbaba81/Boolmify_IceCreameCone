@@ -5,8 +5,6 @@
     public class UpdateBannerDto
     {
         [Required]
-        public int BannerId { get; set; }
-
         [MaxLength(200)]
         public string? Title { get; set; }
 

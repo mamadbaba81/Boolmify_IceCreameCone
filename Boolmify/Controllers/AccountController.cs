@@ -40,11 +40,12 @@
           {
               return Unauthorized("Username not Found and/or password  incorrect");
           }
+          var roles = await _userManager.GetRolesAsync(user);
           return Ok(new NewUserDto()
           {
               Identifier = user.Identifier,
-              Role = user.Role.ToString(),
-              Token = _tokenService.CreateToken(user)
+              Role = roles.FirstOrDefault() ??"User",
+              Token = await _tokenService.CreateToken(user)
           });
             
         }
@@ -83,11 +84,12 @@
                     var roleResult = await _userManager.AddToRoleAsync(appUser, "User");
                     if (roleResult.Succeeded)
                     {
+                        var roles = await _userManager.GetRolesAsync(appUser);
                         return Ok(new NewUserDto
                         {
                             Identifier = appUser.Identifier,
-                            Role = appUser.Role.ToString(),
-                            Token = _tokenService.CreateToken(appUser)
+                            Role = roles.FirstOrDefault() ??"User",
+                            Token = await _tokenService.CreateToken(appUser)
 
 
                         });

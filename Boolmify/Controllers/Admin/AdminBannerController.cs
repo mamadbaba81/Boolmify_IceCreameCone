@@ -24,7 +24,7 @@
         }
         
         
-        [HttpGet("GetByIdBanner/{id}")]
+        [HttpGet("GetById/{id}")]
         public async Task<ActionResult<BannerDto?>> GetByIdBannerAsync(int id)
         {
             var banner = await _bannerService.GetByIdBannerAsync(id);
@@ -37,14 +37,13 @@
         {
             if(!ModelState.IsValid) return BadRequest(ModelState);
             var banner = await _bannerService.CreateBannerAsync(dto);
-            return CreatedAtAction(nameof(GetByIdBannerAsync),new {id = banner.BannerId},  banner);
+            return CreatedAtRoute("GetById",new {id = banner.BannerId},  banner);
         }
     
         [HttpPut("UpdateBanner")]
         public async Task<ActionResult<BannerDto?>> UpdateBannerAsync ( int id ,UpdateBannerDto dto)
         {
-            if (id != dto.BannerId)  return BadRequest("Banner ID mismatch");
-            var updated =  await _bannerService.UpdateBannerAsync(dto);
+            var updated =  await _bannerService.UpdateBannerAsync(id , dto);
             if (updated == null) return NotFound("Banner not found");
             return Ok(updated);
         }

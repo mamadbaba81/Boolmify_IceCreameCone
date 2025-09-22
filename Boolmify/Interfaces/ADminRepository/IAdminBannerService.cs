@@ -10,7 +10,7 @@
         
         Task<BannerDto> CreateBannerAsync(CreateBannerDto Dto);
         
-        Task<BannerDto?> UpdateBannerAsync(UpdateBannerDto  Dto);
+        Task<BannerDto?> UpdateBannerAsync(int id ,  UpdateBannerDto  Dto);
 
         Task<bool> toggleActiveBannerAsync(int id);
         Task<bool> DeleteBannerAsync(int id);

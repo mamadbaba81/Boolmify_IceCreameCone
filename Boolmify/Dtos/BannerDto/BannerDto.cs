@@ -7,6 +7,7 @@
         public string ImageUrl { get; set; } = default!;
         public string? LinkUrl { get; set; }
         public bool IsActive { get; set; }
+        public DateTime?  UpdatedAt { get; set; }
         public DateTime CreatedAt { get; set; }
 
     }
