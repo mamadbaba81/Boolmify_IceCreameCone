@@ -16,7 +16,7 @@
                 _productService = productService;
             }
 
-            [HttpGet("GetAllProducts")]
+            [HttpGet]
             public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllAsync([FromQuery] string? search = null,
                 int pageNumbe = 1, int pageSize = 10)
             {
@@ -24,7 +24,7 @@
                 return Ok(product);
             }
 
-            [HttpGet("GetById/{id}")]
+            [HttpGet("{id}")]
             public async Task<ActionResult<ProductDto>> GetByIdAsync(int id)
             {
                 var product = await _productService.GetByIdAsync(id);
@@ -32,24 +32,23 @@
                 return Ok(product);
             }
 
-            [HttpPost("CreateProduct")]
+            [HttpPost]
             public async Task<ActionResult<ProductDto>> CreateProductAsync([FromBody] CreateProductDto dto)
             {
                 var product = await _productService.CreateAsync(dto);
-                return CreatedAtAction(nameof(GetByIdAsync),new {id= product.ProductId} ,  product);
+                return CreatedAtRoute("GetById",new {id= product.ProductId} ,  product);
             }
 
-            [HttpPut("UpdateProduct")]
+            [HttpPut("{id}")]
             public async Task<ActionResult<ProductDto>> UpdateProductAsync(int id ,[FromBody] UpdateProductDto dto)
             {
-                if(id!=dto.ProductId) return BadRequest("ID mismatch");
-                var update = await _productService.UpdateAsync(dto);
+                var update = await _productService.UpdateAsync(id,dto);
                 if(update==null) return NotFound("Product not found");
                 return Ok(update);
                 
             }
 
-            [HttpDelete("DeleteProduct/{id}")]
+            [HttpDelete("{id}")]
             public async Task<IActionResult> DeleteProductAsync(int id)
             {
                 var delete = await _productService.DeleteAsync(id);

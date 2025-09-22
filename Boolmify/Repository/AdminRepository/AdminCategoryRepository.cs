@@ -82,15 +82,14 @@
 
         }
 
-        public async Task<CategoryDto> UpdateAsync(UpdateCategoryDto dto)
+        public async Task<CategoryDto?> UpdateAsync( int id ,UpdateCategoryDto dto)
         {
-            var category = await _context.Categories.FindAsync(dto.CategoryId);
+            var category = await _context.Categories.FindAsync(id);
             if (category == null) return null;
             if (!string.IsNullOrWhiteSpace(dto.Name)) category.Name = dto.Name;
             if (!string.IsNullOrWhiteSpace(dto.Description)) category.Description = dto.Description;
             if (!string.IsNullOrWhiteSpace(dto.Slug)) category.Slug = dto.Slug;
-            if (dto.ParentId.HasValue) category.ParentId = dto.ParentId;
-
+            category.ParentId = dto.ParentId == 0 ? null : dto.ParentId;
             _context.Categories.Update(category);
             await _context.SaveChangesAsync();
             return await GetByIdAsync(category.CategoryId) ?? throw new Exception("Category update failed.");

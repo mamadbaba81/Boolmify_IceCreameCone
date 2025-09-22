@@ -4,9 +4,6 @@
 
     public class UpdateProductDto
     {
-        [Required]
-        public int  ProductId { get; set; }
-        
         public int?  CategoryId { get; set; }
         public string? ProductName { get; set; } 
         public string? Slug { get; set; }

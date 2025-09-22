@@ -208,10 +208,10 @@
             return await GetByIdAsync(product.ProductId) ?? throw new Exception("Product creation failed");
         }
 
-        public async Task<ProductDto> UpdateAsync(UpdateProductDto dto)
+        public async Task<ProductDto> UpdateAsync(int id ,UpdateProductDto dto)
         {
             var product = await _Context.Products.Include(p=>p.ProductOccasions)
-                .Include(p=>p.AddOns).FirstOrDefaultAsync(p=>p.ProductId == dto.ProductId);
+                .Include(p=>p.AddOns).FirstOrDefaultAsync(p=>p.ProductId == id);
             if (product == null) return null;
             
             if (dto.CategoryId.HasValue)  product.CategoryId = dto.CategoryId.Value;

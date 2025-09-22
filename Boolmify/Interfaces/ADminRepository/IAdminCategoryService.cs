@@ -10,7 +10,7 @@
         
         Task<CategoryDto>  CreateAsync(CreateCategoryDto dto);
         
-        Task<CategoryDto> UpdateAsync(UpdateCategoryDto dto);
+        Task<CategoryDto> UpdateAsync(int id ,UpdateCategoryDto dto);
         
         Task<bool> DeleteAsync(int id);
         

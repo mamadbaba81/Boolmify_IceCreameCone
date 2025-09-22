@@ -16,29 +16,29 @@
                 _CategoryService = categoryService;
             }
 
-            [HttpGet("GetAllCategories")]
+            [HttpGet]
             public async Task<ActionResult<IEnumerable<CategoryDto>>> GetAllCategoriesAsync(string? search = null, int pageNumber = 1, int pageSize = 10)
             {
-                var category = _CategoryService.GetAllAsync(search, pageNumber, pageSize);
+                var category = await _CategoryService.GetAllAsync(search, pageNumber, pageSize);
                 return Ok(category);
             }
 
-            [HttpGet("GetByIdCategory/{id}")]
+            [HttpGet("{id}")]
             public async Task<ActionResult<CategoryDto>> GetByIdCategoryAsync(int id)
             {
-                var category = _CategoryService.GetByIdAsync(id);
+                var category = await _CategoryService.GetByIdAsync(id);
                 if (category == null) return NotFound("Category not found");
                 return Ok(category);
             }
 
-            [HttpGet("GetTree")]
+            [HttpGet("tree")]
             public async Task<ActionResult<IEnumerable<CategoryDto>>> GetAllTreeAsync()
             {
                 var tree = await _CategoryService.GetTreeAsync();
                 return Ok(tree);
             }
 
-            [HttpPost("AddCategory")]
+            [HttpPost]
             public async Task<ActionResult<CategoryDto>> AddCategoryAsync([FromBody] CreateCategoryDto dto)
             {
                 var Category = await _CategoryService.CreateAsync(dto);
@@ -46,16 +46,15 @@
                 return Ok(Category);
             }
 
-            [HttpPut("UpdateCategory/{id}")]
+            [HttpPut("{id}")]
             public async Task<ActionResult<CategoryDto>> UpdateCategoryAsync(int id , [FromBody] UpdateCategoryDto dto)
             {
-                if(id !=dto.CategoryId) return BadRequest("Category ID mismatch");
-                var update =  await _CategoryService.UpdateAsync(dto);
+                var update =  await _CategoryService.UpdateAsync(id , dto);
                 if (update == null) return BadRequest("Category not found");
                 return Ok(update);
             }
 
-            [HttpDelete("DeleteCategory/{id}")]
+            [HttpDelete("{id}")]
             public async Task<ActionResult<CategoryDto>> DeleteCategoryAsync(int id)
             {
                 var delete = await _CategoryService.DeleteAsync(id);
