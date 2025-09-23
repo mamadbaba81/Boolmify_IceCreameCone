@@ -23,7 +23,7 @@
             return Ok(orders);
         }
 
-        [HttpGet("GetById{id}")]
+        [HttpGet("GetById/{id}")]
         public async Task<ActionResult<OrderDto>> GetById(int id)
         {
             var order = await _orderService.GetByIdAsync(id);

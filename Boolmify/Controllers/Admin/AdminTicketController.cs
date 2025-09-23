@@ -50,7 +50,7 @@
             return Ok(reply);
         }
 
-        [HttpPut("Update")]
+        [HttpPut("Update/{id}")]
         public async Task<ActionResult<TicketDto>> UpdateTicketAsync([FromBody]UpdateTicketStatusDto dto)
         {
             var  Ticket = await _ticketService.UpdateAsync(dto);

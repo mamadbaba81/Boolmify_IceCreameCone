@@ -24,12 +24,12 @@
                     RecipientName = "علی محمدی",
                     RecipientPhone = "09120000001",
                     RecipientAddress = "تهران، خیابان آزادی، پلاک 101",
-                    DeliveryDate = DateTime.Now.AddDays(2),
+                    DeliveryDate = new DateTime(2025, 01, 10),
                     Status = OrderStatus.Pending,
                     TotalAmount = 500000,
                     FinalAmouont = 450000,
                     DiscountAmount = 50000,
-                    CreateAt = DateTime.Now
+                    CreateAt = new DateTime(2025, 01, 05),
                 },
                 new Order
                 {
@@ -38,40 +38,40 @@
                     RecipientName = "زهرا رضایی",
                     RecipientPhone = "09120000002",
                     RecipientAddress = "اصفهان، میدان نقش جهان، کوچه 12",
-                    DeliveryDate = DateTime.Now.AddDays(3),
+                    DeliveryDate = new DateTime(2025, 01, 11),
                     Status = OrderStatus.Paid,
                     TotalAmount = 750000,
                     FinalAmouont = 700000,
                     DiscountAmount = 50000,
-                    CreateAt = DateTime.Now
+                    CreateAt = new DateTime(2025, 01, 06)
                 },
                 new Order
                 {
                     OrderId = 3,
-                    UserId = 3,
+                    UserId = 1002,
                     RecipientName = "محمد احمدی",
                     RecipientPhone = "09120000003",
                     RecipientAddress = "مشهد، خیابان امام رضا، پلاک 45",
-                    DeliveryDate = DateTime.Now.AddDays(5),
+                    DeliveryDate = new DateTime(2025, 01, 12),
                     Status = OrderStatus.Shipped,
                     TotalAmount = 1200000,
                     FinalAmouont = 1200000,
                     DiscountAmount = 0,
-                    CreateAt = DateTime.Now
+                    CreateAt = new DateTime(2025, 01, 07)
                 },
                 new Order
                 {
                     OrderId = 4,
-                    UserId = 4,
+                    UserId = 1003,
                     RecipientName = "سارا کیانی",
                     RecipientPhone = "09120000004",
                     RecipientAddress = "شیراز، خیابان زند، کوچه 3",
-                    DeliveryDate = DateTime.Now.AddDays(1),
+                    DeliveryDate = new DateTime(2025, 01, 08),
                     Status = OrderStatus.Delivered,
                     TotalAmount = 300000,
                     FinalAmouont = 270000,
                     DiscountAmount = 30000,
-                    CreateAt = DateTime.Now
+                    CreateAt = new DateTime(2025, 01, 04)
                 }
             );
 ///
