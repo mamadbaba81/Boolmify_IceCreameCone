@@ -129,6 +129,7 @@
         app.UseSwaggerUI();
     }
     app.UseHttpsRedirection();
+    app.UseMiddleware<Boolmify.Middleware.ErrorHandlingMiddleware>();
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();

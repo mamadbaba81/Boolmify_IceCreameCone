@@ -5,7 +5,7 @@
 
         namespace Boolmify.Controllers;
         [ApiController]
-        [Route("api/Admin/Product")]
+        [Route("Api/Admin/Product")]
         [Authorize(Roles = "Admin")]
         public class AdminProductController: ControllerBase
         {
@@ -16,7 +16,7 @@
                 _productService = productService;
             }
 
-            [HttpGet]
+            [HttpGet("GetAll")]
             public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllAsync([FromQuery] string? search = null,
                 int pageNumbe = 1, int pageSize = 10)
             {
@@ -24,7 +24,7 @@
                 return Ok(product);
             }
 
-            [HttpGet("{id}")]
+            [HttpGet("GetById/{id}")]
             public async Task<ActionResult<ProductDto>> GetByIdAsync(int id)
             {
                 var product = await _productService.GetByIdAsync(id);
@@ -32,14 +32,14 @@
                 return Ok(product);
             }
 
-            [HttpPost]
+            [HttpPost("Create")]
             public async Task<ActionResult<ProductDto>> CreateProductAsync([FromBody] CreateProductDto dto)
             {
                 var product = await _productService.CreateAsync(dto);
                 return CreatedAtRoute("GetById",new {id= product.ProductId} ,  product);
             }
 
-            [HttpPut("{id}")]
+            [HttpPut("Update/{id}")]
             public async Task<ActionResult<ProductDto>> UpdateProductAsync(int id ,[FromBody] UpdateProductDto dto)
             {
                 var update = await _productService.UpdateAsync(id,dto);
@@ -56,7 +56,7 @@
                 return NoContent();
             }
 
-            [HttpPatch("toggle/Active/{id}")]
+            [HttpPatch("Toggle/Active/{id}")]
             public async Task<IActionResult> ToggleActiveAsync(int id , bool isActive)
             {
                 var result = await _productService.ToggleActiveAsync(id, isActive);

@@ -8,7 +8,7 @@
 
     namespace Boolmify.Controllers;
     [ApiController]
-    [Route("api/admin/users")]
+    [Route("Api/Admin/Users")]
     [Authorize(Roles = "Admin")]
     public class AdminUsersController: ControllerBase
     {
@@ -49,7 +49,7 @@
         }
         
 
-        [HttpDelete("delete/{id}/")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser([FromRoute] int id)
         {
             var user = await _UserService.DeleteAsync(id);
@@ -58,7 +58,7 @@
             
         }
 
-        [HttpPut("ChangeRole")]
+        [HttpPut("ChangeRole{id}")]
         public async Task<ActionResult> ChangeRole([FromQuery] int userId, [FromQuery] string newRole)
         {
             var user = await _UserService.ChangeRoleAsync(userId ,  newRole);
@@ -66,7 +66,7 @@
             return Ok(true);
         }
 
-        [HttpPut("ChangePassword")]
+        [HttpPut("Change/Password{id}")]
         public async Task<ActionResult> ChangePassword([FromQuery] int userId, [FromQuery] string newPassword)
         {
             var user = await _UserService.ChangePasswordAsync(userId, newPassword);

@@ -19,7 +19,7 @@
             _FAQService = FAQService;
         }
 
-        [HttpGet("GetAllFAQs")]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<FAQDto>>> GetAllFAQsAsync([FromQuery] string? search , [FromQuery] int pageNumbe = 1, [FromQuery] int pageSize = 10 )
         {
             var  result = await _FAQService.GetAllAsync(search, pageNumbe, pageSize);
@@ -35,7 +35,7 @@
             return Ok(faq);
         }
 
-        [HttpPost("CreateFAQ")]
+        [HttpPost("Create")]
         public async Task<ActionResult<FAQDto>> CreateFAQAsync( CreateFAQDto dto)
         {
             var faq = await _FAQService.CreateAsync(dto);
@@ -43,7 +43,7 @@
             
         }
 
-        [HttpPost("UpdateFAQ")]
+        [HttpPut("Update")]
         public async Task<ActionResult<FAQDto>> UpdateFAQAsync(int id , UpdateFAQDto dto)
         {
           if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -52,7 +52,7 @@
           return Ok(updated);
         }
 
-        [HttpDelete("DeleteFAQ/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteFAQAsync(int id)
         {
             var faq = await _FAQService.DeleteAsync(id);
@@ -60,7 +60,7 @@
             return Ok(faq);
         }
 
-        [HttpPatch("{id}/ToggleActive")]
+        [HttpPatch("{id}/Toggle/Active")]
         public async Task<ActionResult> ToggleActiveAsync(int id)
         {
             var faq = await _FAQService.ToogleActiveAsync(id);

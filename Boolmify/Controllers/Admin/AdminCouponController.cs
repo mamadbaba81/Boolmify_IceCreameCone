@@ -5,7 +5,7 @@
 
     namespace Boolmify.Controllers;
     [ApiController]
-    [Route("api/Admin/Coupon")]
+    [Route("Api/Admin/Coupon")]
     [Authorize(Roles = "Admin")]
     public class AdminCouponController:ControllerBase
     {
@@ -16,7 +16,7 @@
             _couponService = couponService;   
         }
 
-        [HttpGet("GetAllCoupons")]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<CouponDto>>> GetAllCouponsAsync([FromQuery] string? search = null,
             int pageNumber = 1, int pageSize = 10)
         {
@@ -24,7 +24,7 @@
             return Ok(coupons);
         }
 
-        [HttpGet("GetByIdCoupon/{id}")]
+        [HttpGet("GetById/{id}")]
         public async Task<ActionResult<CouponDto>> GetById(int id)
         {
             var coupon = await _couponService.GetByIdAsync(id);
@@ -32,15 +32,14 @@
             return Ok(coupon);
         }
 
-        [HttpPost("CreateCoupon")]
+        [HttpPost("Create")]
         public async Task<ActionResult<CouponDto>> CreateCouponAsync([FromBody] CreateCouponDto dto)
         {
-            var coupon = await _couponService.CreateAsync(dto);
-            return CreatedAtAction(nameof(GetById), new {id = coupon.CouponId},  coupon);
-            
+                var coupon = await _couponService.CreateAsync(dto);
+                return Ok(coupon);
         }
 
-        [HttpPut("UpdateCoupon")]
+        [HttpPut("Update/{id}")]
         public async Task<ActionResult> UpdateCouponAsync(int id , [FromBody] UpdateCouponDto dto)
         {
             if (id != dto.CouponId)  return BadRequest("ID mismatch");
@@ -50,7 +49,7 @@
             return Ok(updated);
         }
 
-        [HttpDelete("DeleteCoupon/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCouponAsync(int id)
         {
             var deleted = await _couponService.DeleteAsync(id);
@@ -58,7 +57,7 @@
              return NoContent();
         }
 
-        [HttpPatch("ToggleCoupon/{id}")]
+        [HttpPatch("Toggle/Active/{id}")]
         public async Task<ActionResult> ToggleActive(int id)
         {
             var result = await _couponService.ToggleActiveAsync(id);

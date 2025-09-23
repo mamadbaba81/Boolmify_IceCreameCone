@@ -5,7 +5,7 @@
 
         namespace Boolmify.Controllers;
         [ApiController]
-        [Route("api/Occassion")]
+        [Route("Api/Admin/Occassion")]
         [Authorize(Roles = "Admin")]
         public class AdminOccassionController:ControllerBase
         {
@@ -16,7 +16,7 @@
                 _occasionService = occasionService;
             }
             
-            [HttpGet("GetAllOccassions")]
+            [HttpGet("GetAll")]
             public async Task<ActionResult<IEnumerable<OccasionDto>>> GetAllOccassionsAsync (string? search = null, int pageNumber = 1, int pageSize = 10)
             {
                 var occasions = await _occasionService.GetAllOccasionsAsync(search, pageNumber, pageSize);
@@ -24,7 +24,7 @@
                 
             }
 
-            [HttpGet("GetOccasionById")]
+            [HttpGet("GetById/{id}")]
             public async Task<ActionResult<OccasionDto>> GetOccasionByIdAsync(int id)
             {
                 var occasion = await _occasionService.GetByIdAsync(id);
@@ -32,7 +32,7 @@
                 return Ok(occasion);
             }
 
-            [HttpPost("CreateOccasion")]
+            [HttpPost("Create")]
             public async Task<ActionResult<OccasionDto>> CreateOccasionAsync([FromBody]CreateOccasionDto dto)
             {
                 if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -41,17 +41,15 @@
                 return Ok(occasion);
             }
 
-            [HttpPut("UpdateOccasion")]
+            [HttpPut("Update/{id}")]
             public async Task<ActionResult<OccasionDto>> UpdateOccasionAsync(int id, [FromBody] UpdateOccasionDto dto)
             {
-                if (!ModelState.IsValid) return BadRequest(ModelState);
-                if (id != dto.OccasionId)  return BadRequest("Occasion ID mismatch");
-                var updated = await _occasionService.UpdateAsync(dto);
-                if (updated == null) return BadRequest("Occasion not found");
+                var updated = await _occasionService.UpdateAsync(id,dto);
+                if (updated == null) return NotFound("Occasion not found");
                 return Ok(updated);
             }
 
-            [HttpPatch("ToggleActiveOccasion")]
+            [HttpPatch("Toggle/Active/{id}")]
             public async Task<ActionResult<OccasionDto>> ToggleActiveOccasionAsync(int id)
             {
                 var occasion = await _occasionService.ToggleActiveAsync(id);
@@ -59,7 +57,7 @@
                 return Ok("Occasion status updated");
             }
 
-            [HttpDelete("DeleteOccasion/{id}")]
+            [HttpDelete("{id}")]
             public async Task<IActionResult> DeleteOccasionAsync(int id)
             {
                 var  occasion = await _occasionService.DeleteOccasionAsync(id);

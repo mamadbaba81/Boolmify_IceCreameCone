@@ -24,6 +24,7 @@
             return await query.OrderByDescending(o => o.CreateAt)
                 .Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(o => new OccasionDto
                 {
+                    IsActive = o.IsActive,
                     OccasionId = o.OccasionId,
                     Name = o.Name,
                     description = o.Description,
@@ -38,7 +39,7 @@
             if (occasion == null) return null;
             return new OccasionDto
             {
-
+                IsActive = occasion.IsActive,
                 OccasionId = occasion.OccasionId,
                 Name = occasion.Name,
                 description = occasion.Description,
@@ -61,9 +62,10 @@
             return await GetByIdAsync(occasion.OccasionId) ?? throw new Exception("Occasion creation failed");
         }
 
-        public async Task<OccasionDto> UpdateAsync(UpdateOccasionDto dto)
+        public async Task<OccasionDto> UpdateAsync(int id ,UpdateOccasionDto dto)
         {
-            var occasion = await _Context.Occasions.FindAsync(dto.OccasionId);
+            var occasion = await _Context.Occasions.FindAsync(id);
+            if (occasion == null) return null;
             if (!string.IsNullOrWhiteSpace(dto.Name)) occasion.Name = dto.Name;
             if (!string.IsNullOrWhiteSpace(dto.description)) occasion.Description = dto.description;
             if (!string.IsNullOrWhiteSpace(dto.IconUrl)) occasion.IconUrl = dto.IconUrl;

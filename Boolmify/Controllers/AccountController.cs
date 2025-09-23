@@ -8,7 +8,7 @@
     using Microsoft.EntityFrameworkCore;
 
     namespace Boolmify.Controllers;
-[Route("api/Account")]
+[Route("Api/Account")]
 [ApiController]
     public class AccountController: ControllerBase
     {
@@ -50,7 +50,7 @@
             
         }
 
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
             try

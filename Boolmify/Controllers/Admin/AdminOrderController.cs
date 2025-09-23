@@ -16,14 +16,14 @@
             _orderService = orderService;
         }
 
-        [HttpGet("GetAllOrders")]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<OrderDto>>> GetAllOrders(int pageNumber = 1, int pageSize = 10, int? userId = null, string? status = null)
         {
             var  orders = await _orderService.GetAllAsync(pageNumber, pageSize, userId, status);
             return Ok(orders);
         }
 
-        [HttpGet("GetById")]
+        [HttpGet("GetById{id}")]
         public async Task<ActionResult<OrderDto>> GetById(int id)
         {
             var order = await _orderService.GetByIdAsync(id);
@@ -31,7 +31,7 @@
             return Ok(order);
         }
 
-        [HttpPatch("UpdateOrder/{id}")]
+        [HttpPatch("Update/{id}")]
         public async Task<IActionResult> UpdateStatusOrder(int id ,[FromQuery] string newStatus )
         {
             var updated = await _orderService.UpdateStatusAsync(id, newStatus);
@@ -39,7 +39,7 @@
             return Ok("Order status updated");
         }
 
-        [HttpDelete("DeleteOrder/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(int id)
         {
             var  deleted = await _orderService.DeleteAsync(id);

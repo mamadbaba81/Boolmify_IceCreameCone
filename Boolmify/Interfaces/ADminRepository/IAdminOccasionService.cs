@@ -10,7 +10,7 @@
         Task<OccasionDto?> GetByIdAsync(int id);
         
         Task<OccasionDto> CreateAsync(CreateOccasionDto dto);
-        Task<OccasionDto> UpdateAsync(UpdateOccasionDto dto);
+        Task<OccasionDto> UpdateAsync(int id ,UpdateOccasionDto dto);
         
         Task<bool> DeleteOccasionAsync(int id);
         

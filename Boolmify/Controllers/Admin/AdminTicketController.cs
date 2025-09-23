@@ -7,7 +7,7 @@
 
     namespace Boolmify.Controllers;
         [ApiController]
-        [Route("api/Admin/Ticket")]
+        [Route("Api/Admin/Ticket")]
         [Authorize(Roles = "Admin")]
     public class AdminTicketController: ControllerBase
     {
@@ -18,7 +18,7 @@
             _ticketService = ticketService;
         }
 
-        [HttpGet("GetAllTickets")]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<TicketDto>>> GetAllTicketsAsync([FromQuery]TicketStatus?  status =null,[FromQuery] int? userId = null
                ,  [FromQuery]  string? search = null ,[FromQuery] int pageNumber = 1,[FromQuery] int pageSize = 10)
         {
@@ -26,7 +26,7 @@
             return Ok(tickets);
         }
 
-        [HttpGet("GetTicketById/{id}")]
+        [HttpGet("GetById/{id}")]
         public async Task<ActionResult<TicketDto>> GetTicketByIdAsync(int id)
         {
             var Ticket = await _ticketService.GetById(id);
@@ -34,7 +34,7 @@
             return Ok(Ticket);
         }
 
-        [HttpPost("CreateTicket")]
+        [HttpPost("Create")]
         public async Task<ActionResult<TicketDto>> CreateTicketAsync(int id , [FromBody] CreateTicketDto dto)
         {
             var Ticket = await _ticketService.CreateAsync(dto);
@@ -50,7 +50,7 @@
             return Ok(reply);
         }
 
-        [HttpPut("UpdateTicket")]
+        [HttpPut("Update")]
         public async Task<ActionResult<TicketDto>> UpdateTicketAsync([FromBody]UpdateTicketStatusDto dto)
         {
             var  Ticket = await _ticketService.UpdateAsync(dto);
@@ -58,7 +58,7 @@
             return Ok(Ticket);
         }
 
-        [HttpDelete("DeleteTicket/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<TicketDto>> DeleteTicketAsync(int id)
         {
             var Ticket = await _ticketService.DeleteAsync(id);

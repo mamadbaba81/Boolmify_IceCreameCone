@@ -57,6 +57,9 @@
         {
             if (!Enum.TryParse<DiscountType>(dto.DiscountType, true, out var discountType))
                 throw new Exception("Invalid discount type");
+            
+            if (await _Context.Coupons.AnyAsync(c => c.Code == dto.Code))
+                throw new Exception("Coupon code already exists.");
 
             var coupon = new Coupon
             {

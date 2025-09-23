@@ -5,7 +5,7 @@
 
         namespace Boolmify.Controllers;
             [ApiController]
-            [Route("api/admin/category")]
+            [Route("Api/Admin/Category")]
             [Authorize(Roles = "Admin")]
         public class AdminCategoryController:ControllerBase
         {
@@ -16,14 +16,14 @@
                 _CategoryService = categoryService;
             }
 
-            [HttpGet]
+            [HttpGet("GetAll")]
             public async Task<ActionResult<IEnumerable<CategoryDto>>> GetAllCategoriesAsync(string? search = null, int pageNumber = 1, int pageSize = 10)
             {
                 var category = await _CategoryService.GetAllAsync(search, pageNumber, pageSize);
                 return Ok(category);
             }
 
-            [HttpGet("{id}")]
+            [HttpGet("GetById/{id}")]
             public async Task<ActionResult<CategoryDto>> GetByIdCategoryAsync(int id)
             {
                 var category = await _CategoryService.GetByIdAsync(id);
@@ -31,14 +31,14 @@
                 return Ok(category);
             }
 
-            [HttpGet("tree")]
+            [HttpGet("Tree")]
             public async Task<ActionResult<IEnumerable<CategoryDto>>> GetAllTreeAsync()
             {
                 var tree = await _CategoryService.GetTreeAsync();
                 return Ok(tree);
             }
 
-            [HttpPost]
+            [HttpPost("Create")]
             public async Task<ActionResult<CategoryDto>> AddCategoryAsync([FromBody] CreateCategoryDto dto)
             {
                 var Category = await _CategoryService.CreateAsync(dto);
@@ -46,7 +46,7 @@
                 return Ok(Category);
             }
 
-            [HttpPut("{id}")]
+            [HttpPut("Update/{id}")]
             public async Task<ActionResult<CategoryDto>> UpdateCategoryAsync(int id , [FromBody] UpdateCategoryDto dto)
             {
                 var update =  await _CategoryService.UpdateAsync(id , dto);

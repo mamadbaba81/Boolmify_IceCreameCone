@@ -5,7 +5,7 @@
     
     namespace Boolmify.Controllers;
     [ApiController]
-    [Route("api/banner")]
+    [Route("Api/Admin/Banner")]
     [Authorize(Roles = "Admin")]
     public class AdminBannerController:ControllerBase
     {
@@ -16,7 +16,7 @@
             _bannerService = bannerService;
         }
     
-        [HttpGet("GetAllBanners")]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<BannerDto>>> GetAllBannersAsync()
         {
             var banners = await _bannerService.GetAllBannersAsync();
@@ -32,7 +32,7 @@
             return Ok(banner);
         }
     
-        [HttpPost("CreateBanner")]
+        [HttpPost("Create")]
         public async Task<ActionResult<BannerDto>> CreateBannerAsync(CreateBannerDto dto)
         {
             if(!ModelState.IsValid) return BadRequest(ModelState);
@@ -40,7 +40,7 @@
             return CreatedAtRoute("GetById",new {id = banner.BannerId},  banner);
         }
     
-        [HttpPut("UpdateBanner")]
+        [HttpPut("Update")]
         public async Task<ActionResult<BannerDto?>> UpdateBannerAsync ( int id ,UpdateBannerDto dto)
         {
             var updated =  await _bannerService.UpdateBannerAsync(id , dto);
@@ -57,7 +57,7 @@
 
         }
         
-        [HttpDelete("DeleteBanner/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBannerAsync(int id)
         {
             var deleted = await _bannerService.DeleteBannerAsync(id);
