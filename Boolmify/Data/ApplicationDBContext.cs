@@ -15,6 +15,67 @@
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            //seed data
+            builder.Entity<Order>().HasData(
+                new Order
+                {
+                    OrderId = 1,
+                    UserId = 1,
+                    RecipientName = "علی محمدی",
+                    RecipientPhone = "09120000001",
+                    RecipientAddress = "تهران، خیابان آزادی، پلاک 101",
+                    DeliveryDate = DateTime.Now.AddDays(2),
+                    Status = OrderStatus.Pending,
+                    TotalAmount = 500000,
+                    FinalAmouont = 450000,
+                    DiscountAmount = 50000,
+                    CreateAt = DateTime.Now
+                },
+                new Order
+                {
+                    OrderId = 2,
+                    UserId = 2,
+                    RecipientName = "زهرا رضایی",
+                    RecipientPhone = "09120000002",
+                    RecipientAddress = "اصفهان، میدان نقش جهان، کوچه 12",
+                    DeliveryDate = DateTime.Now.AddDays(3),
+                    Status = OrderStatus.Paid,
+                    TotalAmount = 750000,
+                    FinalAmouont = 700000,
+                    DiscountAmount = 50000,
+                    CreateAt = DateTime.Now
+                },
+                new Order
+                {
+                    OrderId = 3,
+                    UserId = 3,
+                    RecipientName = "محمد احمدی",
+                    RecipientPhone = "09120000003",
+                    RecipientAddress = "مشهد، خیابان امام رضا، پلاک 45",
+                    DeliveryDate = DateTime.Now.AddDays(5),
+                    Status = OrderStatus.Shipped,
+                    TotalAmount = 1200000,
+                    FinalAmouont = 1200000,
+                    DiscountAmount = 0,
+                    CreateAt = DateTime.Now
+                },
+                new Order
+                {
+                    OrderId = 4,
+                    UserId = 4,
+                    RecipientName = "سارا کیانی",
+                    RecipientPhone = "09120000004",
+                    RecipientAddress = "شیراز، خیابان زند، کوچه 3",
+                    DeliveryDate = DateTime.Now.AddDays(1),
+                    Status = OrderStatus.Delivered,
+                    TotalAmount = 300000,
+                    FinalAmouont = 270000,
+                    DiscountAmount = 30000,
+                    CreateAt = DateTime.Now
+                }
+            );
+///
+
             builder.Entity<AppUser>().Property(a => a.Identifier).IsRequired();
             builder.Entity<AppUser>().HasIndex(u=>u.Identifier).IsUnique();
             //FAQ

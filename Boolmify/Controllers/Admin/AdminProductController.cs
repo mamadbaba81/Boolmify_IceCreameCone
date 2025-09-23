@@ -45,7 +45,6 @@
                 var update = await _productService.UpdateAsync(id,dto);
                 if(update==null) return NotFound("Product not found");
                 return Ok(update);
-                
             }
 
             [HttpDelete("{id}")]

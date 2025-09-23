@@ -101,8 +101,8 @@
                 .Include(p => p.ProductOccasions)
                 .ThenInclude(po => po.Occasion)
                 .Include(p => p.AddOns).ThenInclude(pa => pa.ProductAddOn)
-                .FirstOrDefaultAsync();
-            if(product==null)return null;
+                .FirstOrDefaultAsync(p=>p.ProductId == id);
+            if(product==null) return null;
             return new ProductDto
             {
                 ProductId = product.ProductId,
