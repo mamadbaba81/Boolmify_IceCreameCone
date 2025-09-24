@@ -4,6 +4,7 @@
     using Boolmify.Helper;
     using Boolmify.Interfaces;
     using Boolmify.Interfaces.ADminRepository;
+    using Boolmify.Mapping;
     using Boolmify.Models;
     using Boolmify.Repository.AdminRepository;
     using Boolmify.Services;
@@ -23,6 +24,8 @@
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+    builder.Services.AddAutoMapper(typeof(MappingProfile));
+
     builder.Services.AddSwaggerGen(option =>
     {
         option.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
