@@ -66,6 +66,15 @@
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName));
             CreateMap<CreateReviewDto, Review>();
             CreateMap<UpdateReviewDto, Review>();
+            // Review → ReviewDto
+            CreateMap<Review, ReviewDto>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName));
+
+// CreateReviewDto → Review
+            CreateMap<CreateReviewDto, Review>();
+
+// UpdateReviewDto → Review
+            CreateMap<UpdateReviewDto, Review>();
 
             // Ticket
             CreateMap<Ticket, TicketDto>().ReverseMap();
