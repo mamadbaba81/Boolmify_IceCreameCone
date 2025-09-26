@@ -74,7 +74,13 @@
                     CreateAt = new DateTime(2025, 01, 04)
                 }
             );
-///
+            
+            
+            
+            //Rfresh Token 
+
+            builder.Entity<RefreshToken>().HasOne(rt => rt.User).WithMany(u => u.RefreshTokens)
+                .HasForeignKey(rt => rt.UserId);
 
             builder.Entity<AppUser>().Property(a => a.Identifier).IsRequired();
             builder.Entity<AppUser>().HasIndex(u=>u.Identifier).IsUnique();

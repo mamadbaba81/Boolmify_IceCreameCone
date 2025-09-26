@@ -10,6 +10,7 @@
 
     public class AppUser:IdentityUser<int>
     {
+        
         public string Identifier { get; set; } = string.Empty;
         
         public UserRole Role { get; set; } = UserRole.Customer;
@@ -22,6 +23,8 @@
         public virtual List<Comment> Comments { get; set; } = new();
         
         public virtual List<Review> Reviews { get; set; } = new();
+
+        public List<RefreshToken> RefreshTokens { get; set; } = new ();
 
         public virtual List<Ticket> Tickets { get; set; } = new();
 
