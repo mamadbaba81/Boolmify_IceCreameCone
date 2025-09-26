@@ -5,7 +5,6 @@
 
     public interface ITokenService
     {
-        Task<string> CreateToken(AppUser user);
+        Task<(string AccessToken , string RefreshToken)> CreateToken(AppUser user);
         
-       // Task<TokenResponseDto>  RefreshTokenAsync(TokenRequestDto dto);
     }

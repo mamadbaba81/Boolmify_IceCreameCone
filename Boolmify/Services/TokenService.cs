@@ -1,5 +1,6 @@
     using System.IdentityModel.Tokens.Jwt;
          using System.Security.Claims;
+         using System.Security.Cryptography;
          using System.Text;
          using Boolmify.Data;
          using Boolmify.Dtos.RefreshToken;
@@ -28,8 +29,16 @@
                  _Context = context;
                  
              }
+             
+             private string GenerateRefreshToken()
+             {
+                 var randomNumber = new byte[32];
+                 using var rng = RandomNumberGenerator.Create();
+                 rng.GetBytes(randomNumber);
+                 return Convert.ToBase64String(randomNumber);
+             }
          
-             public async Task<string> CreateToken(AppUser user)
+             public async Task<(string AccessToken, string RefreshToken)> CreateToken(AppUser user)
              {
                  var claims = new List<Claim>
                  {
@@ -46,18 +55,24 @@
                  var tokenDescriptor = new SecurityTokenDescriptor
                  {
                      Subject = new ClaimsIdentity(claims),
-                     Expires = DateTime.Now.AddDays(7),
+                     Expires = DateTime.Now.AddMinutes(15),
                      SigningCredentials = creds,
                      Issuer = _config["JWT:Issuer"],
                      Audience = _config["JWT:Audience"]
                  };
                  var TokenHandeler = new JwtSecurityTokenHandler();
                  var token = TokenHandeler.CreateToken(tokenDescriptor);
-                 return TokenHandeler.WriteToken(token);
+                 var AccessToken = TokenHandeler.WriteToken(token);
+                 var refreshToken = GenerateRefreshToken();
+                 _Context.RefreshTokens.Add(new RefreshToken
+                 {
+                     Token = refreshToken,
+                     Expires = DateTime.Now.AddDays(7),
+                     UserId = user.Id
+                 });
+                 await _Context.SaveChangesAsync();
+                 
+                 return (AccessToken, refreshToken);
              }
-
-             // public async Task<TokenResponseDto> RefreshTokenAsync(TokenRequestDto dto)
-             // {
-             //     var StoredToken = await _Context.Re
-             // }
+             
          }

@@ -41,11 +41,15 @@
               return Unauthorized("Username not Found and/or password  incorrect");
           }
           var roles = await _userManager.GetRolesAsync(user);
-          return Ok(new NewUserDto()
+          
+          var (accessToken , refreshToken) = await _tokenService.CreateToken(user);
+          
+          return Ok(new NewUserDto
           {
               Identifier = user.Identifier,
               Role = roles.FirstOrDefault() ??"User",
-              Token = await _tokenService.CreateToken(user)
+             AccessToken = accessToken,
+             RefreshToken = refreshToken,
           });
             
         }
@@ -57,7 +61,7 @@
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
-                var appUser = new AppUser()
+                var appUser = new AppUser
                 {
                     UserName = registerDto.Identifier,
                     Identifier = registerDto.Identifier,
@@ -85,13 +89,13 @@
                     if (roleResult.Succeeded)
                     {
                         var roles = await _userManager.GetRolesAsync(appUser);
+                        var (accessToken, refreshToken) = await _tokenService.CreateToken(appUser);
                         return Ok(new NewUserDto
                         {
                             Identifier = appUser.Identifier,
                             Role = roles.FirstOrDefault() ??"User",
-                            Token = await _tokenService.CreateToken(appUser)
-
-
+                            AccessToken = accessToken,
+                            RefreshToken = refreshToken,
                         });
                     }
                     else

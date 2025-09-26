@@ -218,7 +218,9 @@
             
             
         }
-
+        //RefreshToken
+        public DbSet<RefreshToken> RefreshTokens { get; set; } = default!;
+        
         // Cart
         public DbSet<Cart> Carts { get; set; } = default!;
         public DbSet<CartItem> CartItems { get; set; } = default!;
